@@ -7,21 +7,56 @@
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	<style>
-		.centered {
+		:root {
+			--bg-color: #000; /* default background */
+		}
+
+		body {
+			background-color: var(--bg-color);
+			transition: background-color 0.6s ease;
+		}
+
+		#header {
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			min-height: 100vh;
+			padding-top: 10vh;
 			text-align: center;
+			flex-direction: column;
 		}
-		.copyable {
+		.crypto-icons {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+			margin-top: 20px;
+			flex-wrap: wrap;
+		}
+		.crypto-icon {
+			width: 50px;
+			height: 50px;
 			cursor: pointer;
-			color: #00ffaa;
-			transition: color 0.2s ease-in-out;
+			transition: transform 0.2s;
 		}
-		.copyable:hover {
-			color: #66ffc2;
+		.crypto-icon:hover {
+			transform: scale(1.2);
 		}
 		.copy-status {
-			font-size: 0.9em;
+			font-size: 1em;
 			color: #00ffaa;
-			display: none;
+			margin-top: 20px;
+			opacity: 0;
+			transform: scale(0.8);
+			transition: opacity 0.5s ease, transform 0.5s ease;
+		}
+		.copy-status.show {
+			opacity: 1;
+			transform: scale(1.2);
+		}
+		.note {
+			font-size: 0.8em;
+			color: #888;
+			margin-top: 15px;
 		}
 	</style>
 </head>
@@ -35,70 +70,45 @@
 			<div class="content">
 				<div class="inner">
 					<h1>OKBB</h1>
-					<p>:3 :3 :3</p>
+
+					<div class="crypto-icons">
+						<img src="images/ltc.png" class="crypto-icon" alt="LTC" 
+							onclick="copyAddress('LcDYFW3ranvJSR5nQvVkt2UiqKvsvyCorJ')" 
+							onmouseover="changeBackground('#4fc3f7')" 
+							onmouseout="resetBackground()">
+						
+						<img src="images/bnb.png" class="crypto-icon" alt="BNB" 
+							onclick="copyAddress('0xb31bd4446fbbf1c15facf5a0c1c392a331241f62')" 
+							onmouseover="changeBackground('#fdd835')" 
+							onmouseout="resetBackground()">
+
+						<img src="images/trx.png" class="crypto-icon" alt="TRX" 
+							onclick="copyAddress('TGokor81xtkdAujTry7ihMqLtkbSoJSFXt')" 
+							onmouseover="changeBackground('#d32f2f')" 
+							onmouseout="resetBackground()">
+
+						<img src="images/sol.png" class="crypto-icon" alt="SOL" 
+							onclick="copyAddress('5JFe8JsR8iMjHuWYT2pvzN3p2Rh59pFuPqmXJUVFFF4h')" 
+							onmouseover="changeBackground('#7e57c2')" 
+							onmouseout="resetBackground()">
+
+						<img src="images/eth.png" class="crypto-icon" alt="ETH" 
+							onclick="copyAddress('0xb31bd4446fbbf1c15facf5a0c1c392a331241f62')" 
+							onmouseover="changeBackground('#9fa8da')" 
+							onmouseout="resetBackground()">
+					</div>
+
+					<p id="copy-status" class="copy-status">Copied!</p>
+
+					<p class="note">ps: these are deposit addresses so don't call me a pooron for having a $0.00 balance</p>
+
 				</div>
 			</div>
-			<nav>
-				<ul>
-					<li><a href="#intro">About</a></li>
-					<li><a href="#work">Links</a></li>
-					<li><a href="#about">Donate</a></li>
-				</ul>
-			</nav>
 		</header>
 
 		<!-- Main -->
 		<div id="main">
-
-			<!-- Intro -->
-			<article id="intro">
-				<h2 class="major centered">About</h2>
-				<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-				<p>Cool ass dude :3. By the way, check out my <a href="#work"> socials</a>.</p>
-				<p>OPSEC g.</p>
-			</article>
-
-			<!-- Work -->
-			<article id="work">
-				<h2 class="major">Links</h2>
-				<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
-				<p>Discord</p>
-				<p>Steam</p>
-				<p>Spotify</p>
-			</article>
-
-			<!-- Donate -->
-			<article id="about">
-				<h2 class="major">Donate</h2>
-				<span class="image main"><img src="images/pic03.jpg" alt="" /></span>
-				<p class="centered">Tap an address below to copy:</p>
-
-				<p class="centered">
-					LTC: <span class="copyable" onclick="copyCurrency('LTC')">ltc1qexampleaddress123</span><br>
-					<span id="LTC-status" class="copy-status">Copied!</span>
-				</p>
-
-				<p class="centered">
-					BNB: <span class="copyable" onclick="copyCurrency('BNB')">bnb1exampleaddress456</span><br>
-					<span id="BNB-status" class="copy-status">Copied!</span>
-				</p>
-
-				<p class="centered">
-					TRX: <span class="copyable" onclick="copyCurrency('TRX')">Texample789trxaddress</span><br>
-					<span id="TRX-status" class="copy-status">Copied!</span>
-				</p>
-
-				<p class="centered">
-					SOL: <span class="copyable" onclick="copyCurrency('SOL')">solanaEXAMPLEaddress</span><br>
-					<span id="SOL-status" class="copy-status">Copied!</span>
-				</p>
-
-				<p class="centered">
-					ETH: <span class="copyable" onclick="copyCurrency('ETH')">0xexampleEthAddress000</span><br>
-					<span id="ETH-status" class="copy-status">Copied!</span>
-				</p>
-			</article>
-
+			<!-- Empty on purpose -->
 		</div>
 
 		<!-- Footer -->
@@ -118,17 +128,24 @@
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
 
-	<!-- Copy Script -->
+	<!-- Custom Scripts -->
 	<script>
-		function copyCurrency(currency) {
-			const address = document.querySelector(`span.copyable[onclick="copyCurrency('${currency}')"]`).innerText;
+		function copyAddress(address) {
 			navigator.clipboard.writeText(address).then(() => {
-				const status = document.getElementById(`${currency}-status`);
-				status.style.display = "inline";
+				const status = document.getElementById('copy-status');
+				status.classList.add('show');
 				setTimeout(() => {
-					status.style.display = "none";
+					status.classList.remove('show');
 				}, 1500);
 			});
+		}
+
+		function changeBackground(color) {
+			document.documentElement.style.setProperty('--bg-color', color);
+		}
+
+		function resetBackground() {
+			document.documentElement.style.setProperty('--bg-color', '#000');
 		}
 	</script>
 
