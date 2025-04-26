@@ -25,22 +25,39 @@
 			text-align: center;
 			flex-direction: column;
 		}
+
+		/* Zoom effect on title */
+		@keyframes zoom {
+			0% { transform: scale(1); }
+			50% { transform: scale(1.1); }
+			100% { transform: scale(1); }
+		}
+
+		h1 {
+			animation: zoom 2s ease-in-out infinite;
+			color: #d3d3d3; /* Light grey text */
+			margin-bottom: 40px; /* Added spacing between OKBB and icons */
+		}
+
 		.crypto-icons {
 			display: flex;
 			justify-content: center;
-			gap: 20px;
+			gap: 30px; /* Increased spacing between icons */
 			margin-top: 20px;
 			flex-wrap: wrap;
 		}
+
 		.crypto-icon {
 			width: 50px;
 			height: 50px;
 			cursor: pointer;
 			transition: transform 0.2s;
 		}
+
 		.crypto-icon:hover {
 			transform: scale(1.2);
 		}
+
 		.copy-status {
 			font-size: 1em;
 			color: #00ffaa;
@@ -49,10 +66,12 @@
 			transform: scale(0.8);
 			transition: opacity 0.5s ease, transform 0.5s ease;
 		}
+
 		.copy-status.show {
 			opacity: 1;
 			transform: scale(1.2);
 		}
+
 		.note {
 			font-size: 0.8em;
 			color: #888;
@@ -100,7 +119,7 @@
 
 					<p id="copy-status" class="copy-status">Copied!</p>
 
-					<p class="note">ps: these are deposit addresses so don't call me a pooron for having a $0.00 balance</p>
+					<p class="note">ps: these are deposit addresses so don't call me a pooron for having $0.00 balance</p>
 
 				</div>
 			</div>
