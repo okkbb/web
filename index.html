@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>OKBB</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<style>
+		.centered {
+			text-align: center;
+		}
+		.copyable {
+			cursor: pointer;
+			color: #00ffaa;
+			transition: color 0.2s ease-in-out;
+		}
+		.copyable:hover {
+			color: #66ffc2;
+		}
+		.copy-status {
+			font-size: 0.9em;
+			color: #00ffaa;
+			display: none;
+		}
+	</style>
+</head>
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="content">
+				<div class="inner">
+					<h1>OKBB</h1>
+					<p>:3 :3 :3</p>
+				</div>
+			</div>
+			<nav>
+				<ul>
+					<li><a href="#intro">About</a></li>
+					<li><a href="#work">Links</a></li>
+					<li><a href="#about">Donate</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<!-- Main -->
+		<div id="main">
+
+			<!-- Intro -->
+			<article id="intro">
+				<h2 class="major centered">About</h2>
+				<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
+				<p>Cool ass dude :3. By the way, check out my <a href="#work"> socials</a>.</p>
+				<p>OPSEC g.</p>
+			</article>
+
+			<!-- Work -->
+			<article id="work">
+				<h2 class="major">Links</h2>
+				<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
+				<p>Discord</p>
+				<p>Steam</p>
+				<p>Spotify</p>
+			</article>
+
+			<!-- Donate -->
+			<article id="about">
+				<h2 class="major">Donate</h2>
+				<span class="image main"><img src="images/pic03.jpg" alt="" /></span>
+				<p class="centered">Tap an address below to copy:</p>
+
+				<p class="centered">
+					LTC: <span class="copyable" onclick="copyCurrency('LTC')">ltc1qexampleaddress123</span><br>
+					<span id="LTC-status" class="copy-status">Copied!</span>
+				</p>
+
+				<p class="centered">
+					BNB: <span class="copyable" onclick="copyCurrency('BNB')">bnb1exampleaddress456</span><br>
+					<span id="BNB-status" class="copy-status">Copied!</span>
+				</p>
+
+				<p class="centered">
+					TRX: <span class="copyable" onclick="copyCurrency('TRX')">Texample789trxaddress</span><br>
+					<span id="TRX-status" class="copy-status">Copied!</span>
+				</p>
+
+				<p class="centered">
+					SOL: <span class="copyable" onclick="copyCurrency('SOL')">solanaEXAMPLEaddress</span><br>
+					<span id="SOL-status" class="copy-status">Copied!</span>
+				</p>
+
+				<p class="centered">
+					ETH: <span class="copyable" onclick="copyCurrency('ETH')">0xexampleEthAddress000</span><br>
+					<span id="ETH-status" class="copy-status">Copied!</span>
+				</p>
+			</article>
+
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<p class="copyright">&copy; Made by okbb</p>
+		</footer>
+
+	</div>
+
+	<!-- BG -->
+	<div id="bg"></div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+	<!-- Copy Script -->
+	<script>
+		function copyCurrency(currency) {
+			const address = document.querySelector(`span.copyable[onclick="copyCurrency('${currency}')"]`).innerText;
+			navigator.clipboard.writeText(address).then(() => {
+				const status = document.getElementById(`${currency}-status`);
+				status.style.display = "inline";
+				setTimeout(() => {
+					status.style.display = "none";
+				}, 1500);
+			});
+		}
+	</script>
+
+</body>
+</html>
