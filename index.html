@@ -5,21 +5,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="img/favicon.png" />
-
-	<!-- Flashing Title Script -->
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			const titles = ["okbb.fun", ":3"];
-			let index = 0;
-			setInterval(() => {
-				document.title = titles[index];
-				index = (index + 1) % titles.length;
-			}, 1800);
-		});
-	</script>
-
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
@@ -117,6 +103,11 @@
 			animation: floatCurrency var(--float-duration, 4s) linear forwards;
 		}
 
+		.currency-inner {
+			display: inline-block;
+			animation: wiggleDrift 2s ease-in-out infinite;
+		}
+
 		@keyframes floatCurrency {
 			0% {
 				opacity: 0;
@@ -136,7 +127,27 @@
 				opacity: 0;
 			}
 		}
+
+		@keyframes wiggleDrift {
+			0%, 100% {
+				transform: translateX(0);
+			}
+			50% {
+				transform: translateX(var(--wiggle-amount, 10px));
+			}
+		}
 	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const titles = ["okbb.fun", ":3"];
+			let index = 0;
+			setInterval(() => {
+				document.title = titles[index];
+				index = (index + 1) % titles.length;
+			}, 1800);
+		});
+	</script>
 </head>
 
 <body class="is-preload">
@@ -158,7 +169,7 @@
 						
 						<img src="img/bnb.png" class="crypto-icon" alt="BNB" 
 							onclick="copyAddress('0xb31bd4446fbbf1c15facf5a0c1c392a331241f62')" 
-							onmouseover="changeBackground('#c8b800')" 
+							onmouseover="changeBackground('#dfc968')" 
 							onmouseout="resetBackground()">
 
 						<img src="img/trx.png" class="crypto-icon" alt="TRX" 
@@ -180,7 +191,6 @@
 					<p id="copy-status" class="copy-status">Copied!</p>
 
 					<p class="note">Note: these are deposit addresses</p>
-
 				</div>
 			</div>
 		</header>
@@ -192,7 +202,6 @@
 		<footer id="footer">
 			<p class="copyright">&copy; Made by okbb</p>
 		</footer>
-
 	</div>
 
 	<!-- BG -->
@@ -226,11 +235,15 @@
 		}
 
 		// Currencies floating
-		const currencies = ["$", "€", "£", "¥", "₿"];
+		const currencies = ["$", "€", "£", "¥", "₿", "Ł", "₽"];
 		function spawnCurrency() {
 			const currency = document.createElement("div");
 			currency.classList.add("currency");
-			currency.textContent = currencies[Math.floor(Math.random() * currencies.length)];
+
+			const span = document.createElement("span");
+			span.classList.add("currency-inner");
+			span.textContent = currencies[Math.floor(Math.random() * currencies.length)];
+			currency.appendChild(span);
 
 			let x;
 			do {
@@ -240,15 +253,17 @@
 			currency.style.left = `${x}px`;
 			currency.style.top = `${window.innerHeight}px`;
 
-			const randomOffsetY = Math.floor(Math.random() * 200) + 100; // Float distance (100px to 300px)
-			const randomDriftX = Math.floor(Math.random() * 100) - 50; // Left or right (-50px to +50px)
-			const randomRotation = Math.floor(Math.random() * 60) - 30; // Tilt (-30deg to +30deg)
-			const randomDuration = (Math.random() * 2 + 3).toFixed(2) + "s"; // Duration 3s to 5s
+			const randomOffsetY = Math.floor(Math.random() * 200) + 100;
+			const randomDriftX = Math.floor(Math.random() * 100) - 50;
+			const randomRotation = Math.floor(Math.random() * 60) - 30;
+			const randomDuration = (Math.random() * 2 + 3).toFixed(2) + "s";
+			const randomWiggle = (Math.random() * 20 - 10).toFixed(2) + "px";
 
 			currency.style.setProperty('--drift-x', `${randomDriftX}px`);
 			currency.style.setProperty('--drift-y', `-${randomOffsetY}px`);
 			currency.style.setProperty('--random-rotation', `${randomRotation}deg`);
 			currency.style.setProperty('--float-duration', randomDuration);
+			span.style.setProperty('--wiggle-amount', randomWiggle);
 
 			document.body.appendChild(currency);
 
@@ -257,7 +272,7 @@
 			}, parseFloat(randomDuration) * 1000);
 		}
 
-		setInterval(spawnCurrency, 300);
+		setInterval(spawnCurrency, 200);
 	</script>
 
 </body>
