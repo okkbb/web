@@ -13,11 +13,10 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			const titles = ["okbb.fun", ":3"];
 			let index = 0;
-
 			setInterval(() => {
 				document.title = titles[index];
 				index = (index + 1) % titles.length;
-			}, 1800); // switch every 1.8 seconds
+			}, 1800);
 		});
 	</script>
 
@@ -30,8 +29,20 @@
 		}
 
 		body {
+			margin: 0;
+			padding: 0;
+			overflow-x: hidden;
+			position: relative;
+			min-height: 100vh;
 			background-color: var(--bg-color);
-			transition: background-color 0.6s ease;
+			transition: background-color 0.8s ease;
+		}
+
+		#footer {
+			font-size: 0.7em;
+			color: #666;
+			text-align: center;
+			padding: 10px 0;
 		}
 
 		#header {
@@ -68,7 +79,7 @@
 			width: 50px;
 			height: 50px;
 			cursor: pointer;
-			transition: transform 0.2s;
+			transition: transform 0.2s ease;
 		}
 
 		.crypto-icon:hover {
@@ -93,6 +104,37 @@
 			font-size: 0.8em;
 			color: #888;
 			margin-top: 15px;
+		}
+
+		.currency {
+			position: absolute;
+			color: #fff;
+			font-size: 24px;
+			opacity: 0;
+			pointer-events: none;
+			font-weight: bold;
+			transform: rotate(var(--random-rotation));
+			animation: floatCurrency var(--float-duration, 4s) linear forwards;
+		}
+
+		@keyframes floatCurrency {
+			0% {
+				opacity: 0;
+				transform: translate(0, 0) rotate(var(--random-rotation)) scale(0.5);
+			}
+			10% {
+				opacity: 1;
+			}
+			70% {
+				opacity: 1;
+			}
+			90% {
+				opacity: 0;
+			}
+			100% {
+				transform: translate(var(--drift-x, 0px), var(--drift-y, -200px)) rotate(var(--random-rotation)) scale(1.2);
+				opacity: 0;
+			}
 		}
 	</style>
 </head>
@@ -144,9 +186,7 @@
 		</header>
 
 		<!-- Main -->
-		<div id="main">
-			<!-- Empty on purpose -->
-		</div>
+		<div id="main"></div>
 
 		<!-- Footer -->
 		<footer id="footer">
@@ -184,6 +224,40 @@
 		function resetBackground() {
 			document.documentElement.style.setProperty('--bg-color', '#000');
 		}
+
+		// Currencies floating
+		const currencies = ["$", "€", "£", "¥", "₿"];
+		function spawnCurrency() {
+			const currency = document.createElement("div");
+			currency.classList.add("currency");
+			currency.textContent = currencies[Math.floor(Math.random() * currencies.length)];
+
+			let x;
+			do {
+				x = Math.random() * window.innerWidth;
+			} while (x > window.innerWidth * 0.35 && x < window.innerWidth * 0.65);
+
+			currency.style.left = `${x}px`;
+			currency.style.top = `${window.innerHeight}px`;
+
+			const randomOffsetY = Math.floor(Math.random() * 200) + 100; // Float distance (100px to 300px)
+			const randomDriftX = Math.floor(Math.random() * 100) - 50; // Left or right (-50px to +50px)
+			const randomRotation = Math.floor(Math.random() * 60) - 30; // Tilt (-30deg to +30deg)
+			const randomDuration = (Math.random() * 2 + 3).toFixed(2) + "s"; // Duration 3s to 5s
+
+			currency.style.setProperty('--drift-x', `${randomDriftX}px`);
+			currency.style.setProperty('--drift-y', `-${randomOffsetY}px`);
+			currency.style.setProperty('--random-rotation', `${randomRotation}deg`);
+			currency.style.setProperty('--float-duration', randomDuration);
+
+			document.body.appendChild(currency);
+
+			setTimeout(() => {
+				currency.remove();
+			}, parseFloat(randomDuration) * 1000);
+		}
+
+		setInterval(spawnCurrency, 300);
 	</script>
 
 </body>
