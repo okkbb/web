@@ -1,280 +1,218 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>okbb.lol</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>okbb.lol</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-	<link rel="icon" type="image/png" href="img/favicon.png" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-	<style>
-		:root {
-			--bg-color: #000;
-		}
+  <style>
+    :root {
+      --bg-color: #000;
+    }
 
-		body {
-			margin: 0;
-			padding: 0;
-			overflow-x: hidden;
-			position: relative;
-			min-height: 100vh;
-			background-color: var(--bg-color);
-			transition: background-color 0.8s ease;
-		}
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      background-color: var(--bg-color);
+      transition: background-color 0.8s ease;
+      opacity: 0;
+      animation: fadeIn 0.7s ease forwards;
+    }
 
-		#footer {
-			font-size: 0.7em;
-			color: #666;
-			text-align: center;
-			padding: 10px 0;
-		}
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-		#header {
-			display: flex;
-			justify-content: center;
-			align-items: flex-start;
-			min-height: 80vh;
-			padding-top: 5vh;
-			text-align: center;
-			flex-direction: column;
-		}
+    /* Soft animated gradient sheen */
+    #bg::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent 70%);
+      animation: sheenMove 6s ease-in-out infinite alternate;
+    }
 
-		@keyframes zoom {
-			0% { transform: scale(1); }
-			51% { transform: scale(1.1); }
-			100% { transform: scale(1); }
-		}
+    @keyframes sheenMove {
+      0% { transform: translate(-20px, -20px); opacity: 0.05; }
+      100% { transform: translate(20px, 20px); opacity: 0.12; }
+    }
 
-		h1 {
-			animation: zoom 2s ease-in-out infinite;
-			color: #d3d3d3;
-			margin-bottom: 50px;
-		}
+    #header {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 80vh;
+      padding-top: 5vh;
+      text-align: center;
+      flex-direction: column;
+    }
 
-		.crypto-icons {
-			display: flex;
-			justify-content: center;
-			gap: 30px;
-			margin-top: 20px;
-			flex-wrap: wrap;
-		}
+    @keyframes zoom {
+      0% { transform: scale(1); }
+      51% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
 
-		.crypto-icon {
-			width: 50px;
-			height: 50px;
-			cursor: pointer;
-			transition: transform 0.2s ease;
-		}
+    h1 {
+      animation: zoom 2s ease-in-out infinite;
+      color: #d3d3d3;
+      margin-bottom: 50px;
+    }
 
-		.crypto-icon:hover {
-			transform: scale(1.2);
-		}
+    /* Neon glow hover (effect 1) */
+    .crypto-icons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
 
-		.copy-status {
-			font-size: 1em;
-			color: #00ffaa;
-			margin-top: 20px;
-			opacity: 0;
-			transform: scale(0.8);
-			transition: opacity 0.5s ease, transform 0.5s ease;
-		}
+    .crypto-icon {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.3s ease;
+    }
 
-		.copy-status.show {
-			opacity: 1;
-			transform: scale(1.2);
-		}
+    .crypto-icon:hover {
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 12px var(--glow-color));
+    }
 
-		.note {
-			font-size: 0.8em;
-			color: #888;
-			margin-top: 15px;
-		}
+    /* Copy status animation */
+    .copy-status {
+      font-size: 1em;
+      color: #00ffaa;
+      margin-top: 20px;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
 
-		.currency {
-			position: absolute;
-			color: #fff;
-			font-size: 24px;
-			opacity: 0;
-			pointer-events: none;
-			font-weight: bold;
-			transform: rotate(var(--random-rotation));
-			animation: floatCurrency var(--float-duration, 4s) linear forwards;
-		}
+    .copy-status.show {
+      opacity: 1;
+      transform: scale(1.2);
+    }
 
-		.currency-inner {
-			display: inline-block;
-			animation: wiggleDrift 2s ease-in-out infinite;
-		}
+    /* Liquid button hover (effect 9) */
+    .liquid-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      color: white;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 40px;
+      position: relative;
+      overflow: hidden;
+    }
 
-		@keyframes floatCurrency {
-			0% {
-				opacity: 0;
-				transform: translate(0, 0) rotate(var(--random-rotation)) scale(0.5);
-			}
-			10% {
-				opacity: 1;
-			}
-			70% {
-				opacity: 1;
-			}
-			90% {
-				opacity: 0;
-			}
-			100% {
-				transform: translate(var(--drift-x, 0px), var(--drift-y, -200px)) rotate(var(--random-rotation)) scale(1.2);
-				opacity: 0;
-			}
-		}
+    .liquid-btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);
+      transform: translate(var(--x, 0), var(--y, 0));
+      transition: transform 0.2s ease;
+    }
 
-		@keyframes wiggleDrift {
-			0%, 100% {
-				transform: translateX(0);
-			}
-			50% {
-				transform: translateX(var(--wiggle-amount, 10px));
-			}
-		}
-	</style>
+    .liquid-btn:hover::before {
+      --x: 50px;
+      --y: 50px;
+    }
 
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			const titles = ["okbb.fun", ":3"];
-			let index = 0;
-			setInterval(() => {
-				document.title = titles[index];
-				index = (index + 1) % titles.length;
-			}, 1800);
-		});
-	</script>
+    .note {
+      font-size: 0.8em;
+      color: #888;
+      margin-top: 15px;
+    }
+
+    footer { color: #666; font-size: 0.7em; text-align:center; padding:10px 0; }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const titles = ["okbb.lol", ":3"]; // Updated
+      let index = 0;
+      setInterval(() => {
+        document.title = titles[index];
+        index = (index + 1) % titles.length;
+      }, 1800);
+    });
+  </script>
 </head>
 
 <body class="is-preload">
+  <div id="wrapper">
+    <header id="header">
+      <div class="content">
+        <div class="inner">
+          <h1>OKBB</h1>
 
-	<!-- Wrapper -->
-	<div id="wrapper">
+          <div class="crypto-icons">
+            <img src="img/ltc.png" class="crypto-icon" alt="Litecoin" style="--glow-color:#4de0ff" onclick="copyAddress('ltc1qw0yg0de8r6vjmdxt4j398v2sc4xh73l7kqmlru')" onmouseover="changeBackground('#23404b')" onmouseout="resetBackground()">
 
-		<!-- Header -->
-		<header id="header">
-			<div class="content">
-				<div class="inner">
-					<h1>OKBB</h1>
+            <img src="img/bnb.png" class="crypto-icon" alt="BNB" style="--glow-color:#ffd86b" onclick="copyAddress('0xe8DDc60278e19E0CDa28a6c9dCCD3C1a8488d7c5')" onmouseover="changeBackground('#dfc968')" onmouseout="resetBackground()">
 
-					<div class="crypto-icons">
-						<img src="img/ltc.png" class="crypto-icon" alt="Litecoin" 
-							onclick="copyAddress('LcDYFW3ranvJSR5nQvVkt2UiqKvsvyCorJ')" 
-							onmouseover="changeBackground('#23404b')" 
-							onmouseout="resetBackground()">
-						
-						<img src="img/bnb.png" class="crypto-icon" alt="BNB" 
-							onclick="copyAddress('0xb31bd4446fbbf1c15facf5a0c1c392a331241f62')" 
-							onmouseover="changeBackground('#dfc968')" 
-							onmouseout="resetBackground()">
+            <img src="img/trx.png" class="crypto-icon" alt="TRX" style="--glow-color:#ff4d4d" onclick="copyAddress('TKyviH8HX1ULwc9yN6NGwbHyTtbd9vYLBe')" onmouseover="changeBackground('#a81313')" onmouseout="resetBackground()">
 
-						<img src="img/trx.png" class="crypto-icon" alt="TRX" 
-							onclick="copyAddress('TGokor81xtkdAujTry7ihMqLtkbSoJSFXt')" 
-							onmouseover="changeBackground('#a81313')" 
-							onmouseout="resetBackground()">
+            <img src="img/sol.png" class="crypto-icon" alt="Solana" style="--glow-color:#b372f7" onclick="copyAddress('Fa8dCyGzG696ZMjczC544eZEC6T2A3Mi1sYtUWqjefhR')" onmouseover="changeBackground('#7e57c2')" onmouseout="resetBackground()">
 
-						<img src="img/sol.png" class="crypto-icon" alt="Solana" 
-							onclick="copyAddress('5JFe8JsR8iMjHuWYT2pvzN3p2Rh59pFuPqmXJUVFFF4h')" 
-							onmouseover="changeBackground('#7e57c2')" 
-							onmouseout="resetBackground()">
+            <img src="img/eth.png" class="crypto-icon" alt="Ethereum" style="--glow-color:#8ab4ff" onclick="copyAddress('0xe8DDc60278e19E0CDa28a6c9dCCD3C1a8488d7c5')" onmouseover="changeBackground('#9fa8da')" onmouseout="resetBackground()">
+          </div>
 
-						<img src="img/eth.png" class="crypto-icon" alt="Ethereum" 
-							onclick="copyAddress('0xb31bd4446fbbf1c15facf5a0c1c392a331241f62')" 
-							onmouseover="changeBackground('#9fa8da')" 
-							onmouseout="resetBackground()">
-					</div>
+          <p id="copy-status" class="copy-status">Copied!</p>
 
-					<p id="copy-status" class="copy-status">Copied!</p>
+          <div class="liquid-btn">More Soon</div>
 
-					<p class="note">Note: these are deposit addresses</p>
-				</div>
-			</div>
-		</header>
+          <p class="note">Note: these are deposit addresses</p>
+        </div>
+      </div>
+    </header>
 
-		<!-- Main -->
-		<div id="main"></div>
+    <div id="main"></div>
 
-		<!-- Footer -->
-		<footer id="footer">
-			<p class="copyright">&copy; Made by okbb</p>
-		</footer>
-	</div>
+    <footer id="footer"><p>&copy; Made by okbb</p></footer>
+  </div>
 
-	<!-- BG -->
-	<div id="bg"></div>
+  <div id="bg"></div>
 
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
+  <script>
+    function copyAddress(address) {
+      navigator.clipboard.writeText(address).then(() => {
+        const status = document.getElementById('copy-status');
+        status.classList.add('show');
+        const audio = new Audio('assets/snd/copy.mp3');
+        audio.volume = 0.15;
+        audio.play();
+        setTimeout(() => status.classList.remove('show'), 1500);
+      });
+    }
 
-	<!-- Custom Scripts -->
-	<script>
-		function copyAddress(address) {
-			navigator.clipboard.writeText(address).then(() => {
-				const status = document.getElementById('copy-status');
-				status.classList.add('show');
-				setTimeout(() => {
-					status.classList.remove('show');
-				}, 1500);
-			});
-		}
-
-		function changeBackground(color) {
-			document.documentElement.style.setProperty('--bg-color', color);
-		}
-
-		function resetBackground() {
-			document.documentElement.style.setProperty('--bg-color', '#000');
-		}
-
-		// Currencies floating
-		const currencies = ["$", "€", "£", "¥", "₿", "Ł", "₽"];
-		function spawnCurrency() {
-			const currency = document.createElement("div");
-			currency.classList.add("currency");
-
-			const span = document.createElement("span");
-			span.classList.add("currency-inner");
-			span.textContent = currencies[Math.floor(Math.random() * currencies.length)];
-			currency.appendChild(span);
-
-			let x;
-			do {
-				x = Math.random() * window.innerWidth;
-			} while (x > window.innerWidth * 0.35 && x < window.innerWidth * 0.65);
-
-			currency.style.left = `${x}px`;
-			currency.style.top = `${window.innerHeight}px`;
-
-			const randomOffsetY = Math.floor(Math.random() * 200) + 100;
-			const randomDriftX = Math.floor(Math.random() * 100) - 50;
-			const randomRotation = Math.floor(Math.random() * 60) - 30;
-			const randomDuration = (Math.random() * 2 + 3).toFixed(2) + "s";
-			const randomWiggle = (Math.random() * 20 - 10).toFixed(2) + "px";
-
-			currency.style.setProperty('--drift-x', `${randomDriftX}px`);
-			currency.style.setProperty('--drift-y', `-${randomOffsetY}px`);
-			currency.style.setProperty('--random-rotation', `${randomRotation}deg`);
-			currency.style.setProperty('--float-duration', randomDuration);
-			span.style.setProperty('--wiggle-amount', randomWiggle);
-
-			document.body.appendChild(currency);
-
-			setTimeout(() => {
-				currency.remove();
-			}, parseFloat(randomDuration) * 1000);
-		}
-
-		setInterval(spawnCurrency, 200);
-	</script>
-
+    function changeBackground(color) {
+      document.documentElement.style.setProperty('--bg-color', color);
+    }
+    function resetBackground() {
+      document.documentElement.style.setProperty('--bg-color', '#000');
+    }
+  </script>
 </body>
 </html>
-
