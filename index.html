@@ -32,18 +32,6 @@
     }
 
     /* Soft animated gradient sheen */
-    #bg::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent 70%);
-      animation: sheenMove 6s ease-in-out infinite alternate;
-    }
-
     @keyframes sheenMove {
       0% { transform: translate(-20px, -20px); opacity: 0.05; }
       100% { transform: translate(20px, 20px); opacity: 0.12; }
